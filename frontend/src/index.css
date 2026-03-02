@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #0a0a0f;
+    color: #e4e4f0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3a3a50; }
+}
+
+@layer components {
+  .sidebar-link {
+    @apply flex items-center gap-2.5 px-3 py-2 rounded-md text-sm text-zinc-400
+           hover:text-zinc-100 hover:bg-white/5 transition-colors duration-150 cursor-pointer;
+  }
+  .sidebar-link.active {
+    @apply text-zinc-100 bg-white/8;
+  }
+}
+
+@layer utilities {
+  /* Fade + slide-up entrance */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  .fade-up {
+    animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* One-time highlight sweep on card mount */
+  @keyframes shimmerSweep {
+    0%   { transform: translateX(-160%); }
+    100% { transform: translateX(260%);  }
+  }
+  .card-sweep {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      108deg,
+      transparent       32%,
+      rgba(255,255,255,0.032) 50%,
+      transparent       68%
+    );
+    animation: shimmerSweep 1.5s ease-in-out both;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Card hover — neutral elevation, no colored glow */
+  .card-glow {
+    transition: transform 200ms ease, box-shadow 200ms ease;
+  }
+  .card-glow:hover {
+    box-shadow:
+      0 16px 32px -8px rgba(0, 0, 0, 0.65),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+}
