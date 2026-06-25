@@ -1,0 +1,16 @@
+<?php
+declare(strict_types=1);
+
+namespace App;
+
+final class Container {
+  private static array $items = [];
+
+  public static function set(string $key, mixed $value): void {
+    self::$items[$key] = $value;
+  }
+
+  public static function get(string $key): mixed {
+    return self::$items[$key] ?? null;
+  }
+}

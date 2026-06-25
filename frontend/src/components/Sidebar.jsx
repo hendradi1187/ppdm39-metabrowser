@@ -9,7 +9,6 @@ import {
   Columns3,
   Bookmark,
   X,
-  Share2,
 } from 'lucide-react'
 import clsx from 'clsx'
 import { useBookmarks } from '../lib/BookmarksContext'
@@ -26,7 +25,6 @@ const navGroups = [
     label: 'Analysis',
     items: [
       { to: '/columns',    label: 'Column X-Ref', icon: Columns3    },
-      { to: '/erd',        label: 'ERD Viewer',   icon: Share2      },
       { to: '/load-order', label: 'Load Order',   icon: GitBranch   },
       { to: '/audit',      label: 'Audit',        icon: ShieldCheck },
     ],

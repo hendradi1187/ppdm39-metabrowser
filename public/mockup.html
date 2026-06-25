@@ -1,0 +1,423 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PPDM39MetaBrowser — Mockup</title>
+  <style>
+    :root { --bg:#0b1020; --card:#121a2f; --text:#e7ecff; --muted:#a9b4d6; --line:#273155; --accent:#76a7ff; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    a{color:var(--accent);text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:18px}
+    .nav{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+    .brand{font-weight:700;color:var(--text)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+    .grid{display:grid;grid-template-columns:300px 1fr;gap:16px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+    th{color:var(--muted);text-align:left;font-weight:600}
+    .badge{display:inline-block;padding:3px 8px;border:1px solid var(--line);border-radius:999px;color:var(--muted);margin-right:6px;font-size:12px}
+    .kpi{display:flex;gap:12px;flex-wrap:wrap}
+    .kpi .box{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,0.02)}
+    .search{width:100%;padding:10px;border-radius:12px;border:1px solid var(--line);background:#0c1326;color:var(--text)}
+    .small{color:var(--muted);font-size:13px}
+    pre{white-space:pre-wrap;background:#0c1326;border:1px solid var(--line);padding:12px;border-radius:12px;overflow:auto}
+
+    /* Tab navigation for mockup */
+    .tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+    .tab{padding:8px 16px;border-radius:8px;border:1px solid var(--line);cursor:pointer;background:transparent;color:var(--muted);font-size:14px}
+    .tab.active{background:var(--card);color:var(--text);border-color:var(--accent)}
+    .page{display:none}
+    .page.active{display:block}
+    .mockup-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:8px}
+
+    /* orphan ok = green tint, error = red tint */
+    .orphan-ok{color:#6ee7b7}
+    .orphan-err{color:#f87171}
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- NAV BAR (sama di semua halaman) -->
+  <div class="nav" style="margin-bottom:14px">
+    <div class="brand">PPDM39MetaBrowser</div>
+    <a href="#" onclick="showPage('home')">Dashboard</a>
+    <a href="#" onclick="showPage('tables')">Tables</a>
+    <a href="#" onclick="showPage('loadorder')">Load Order</a>
+    <a href="#" onclick="showPage('audit')">Audit</a>
+    <div class="small" style="margin-left:auto">
+      Meta DB: <span class="badge">ppdm_meta</span>
+      Target DB: <span class="badge">ppdm39_prod</span>
+    </div>
+  </div>
+
+  <!-- PAGE TABS (hanya untuk mockup) -->
+  <div class="tabs">
+    <button class="tab active" onclick="showPage('home')">/ Dashboard</button>
+    <button class="tab" onclick="showPage('tables')">/tables</button>
+    <button class="tab" onclick="showPage('detail')">/table?name=WELL</button>
+    <button class="tab" onclick="showPage('loadorder')">/load-order</button>
+    <button class="tab" onclick="showPage('audit')">/audit</button>
+    <button class="tab" onclick="showPage('auditoff')">/audit (disabled)</button>
+  </div>
+
+  <!-- ===================== HOME ===================== -->
+  <div id="page-home" class="page active">
+    <div class="mockup-label">GET /</div>
+    <div class="card">
+      <h2 style="margin-top:0">Dashboard</h2>
+      <div class="kpi">
+        <div class="box"><div class="small">Tables</div><div style="font-size:22px;font-weight:700">412</div></div>
+        <div class="box"><div class="small">Columns</div><div style="font-size:22px;font-weight:700">8 234</div></div>
+        <div class="box"><div class="small">Constraints</div><div style="font-size:22px;font-weight:700">1 870</div></div>
+        <div class="box"><div class="small">Constraint Columns</div><div style="font-size:22px;font-weight:700">2 541</div></div>
+        <div class="box"><div class="small">Domains</div><div style="font-size:22px;font-weight:700">97</div></div>
+        <div class="box"><div class="small">Check Values</div><div style="font-size:22px;font-weight:700">3 108</div></div>
+      </div>
+      <p class="small">Gunakan menu <b>Tables</b> untuk eksplorasi detail, <b>Load Order</b> untuk urutan pengisian berdasarkan FK, dan <b>Audit</b> untuk membandingkan dengan Target DB.</p>
+    </div>
+  </div>
+
+  <!-- ===================== TABLES ===================== -->
+  <div id="page-tables" class="page">
+    <div class="mockup-label">GET /tables</div>
+    <div class="grid">
+      <div class="card">
+        <h3 style="margin-top:0">Cari Tabel</h3>
+        <input class="search" placeholder="mis. WELL, BA_, ENT_, PPDM_" value="">
+        <p class="small" style="margin-bottom:0">Klik nama tabel untuk membuka detail (kolom, constraint, child/parent).</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Daftar Tabel (412)</h3>
+        <table>
+          <thead>
+            <tr><th style="width:260px">TABLE_NAME</th><th>COMMENT</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="#" onclick="showPage('detail')">WELL</a></td><td class="small">Master well header table containing core well identification data</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">WELL_BORE</a></td><td class="small">Wellbore information related to a well</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">WELL_LOG</a></td><td class="small">Log data collected from wellbore</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">BA_AUTHORITY</a></td><td class="small">Business Associate authority table</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">BA_ORGANIZATION</a></td><td class="small">Organization details for business associates</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">FIELD</a></td><td class="small">Oil and gas field definition</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">POOL</a></td><td class="small">Reservoir pool definition</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">FACILITY</a></td><td class="small">Surface facility information</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">STRAT_UNIT</a></td><td class="small">Stratigraphic unit classification</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">PROD_STRING</a></td><td class="small">Production string configuration</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">PPDM_LOOKUP</a></td><td class="small">Controlled vocabulary / lookup values</td></tr>
+            <tr><td><a href="#" onclick="showPage('detail')">PPDM_TABLE</a></td><td class="small">Meta model: list of all PPDM tables</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TABLE DETAIL ===================== -->
+  <div id="page-detail" class="page">
+    <div class="mockup-label">GET /table?name=WELL</div>
+
+    <div class="card" style="margin-bottom:16px">
+      <h2 style="margin:0">WELL</h2>
+      <div class="small" style="margin-top:6px">Master well header table containing core well identification data</div>
+      <div style="margin-top:10px">
+        <span class="badge">ALIAS: WELLA</span>
+        <span class="badge">SYN: W</span>
+      </div>
+      <div style="margin-top:10px">
+        <span class="badge">Parents: 3</span>
+        <span class="badge">Children: 18</span>
+        <span class="badge">Columns: 42</span>
+        <span class="badge">Constraints: 7</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3 style="margin-top:0">Relationships</h3>
+
+        <div style="margin-bottom:14px">
+          <div class="small"><b>Parent tables</b> (tabel yang direferensikan oleh WELL)</div>
+          <ul>
+            <li><a href="#">BA_AUTHORITY</a> <span class="small">via WELL_BA_FK1</span></li>
+            <li><a href="#">FIELD</a> <span class="small">via WELL_FIELD_FK1</span></li>
+            <li><a href="#">STRAT_UNIT</a> <span class="small">via WELL_STRAT_FK1</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="small"><b>Child tables</b> (tabel yang mereferensikan WELL)</div>
+          <ul>
+            <li><a href="#">WELL_BORE</a> <span class="small">via WELL_BORE_FK1</span></li>
+            <li><a href="#">WELL_LOG</a> <span class="small">via WELL_LOG_FK1</span></li>
+            <li><a href="#">WELL_TEST</a> <span class="small">via WELL_TEST_FK1</span></li>
+            <li><a href="#">WELL_CORE</a> <span class="small">via WELL_CORE_FK1</span></li>
+            <li><a href="#">PROD_STRING</a> <span class="small">via PROD_STRING_FK1</span></li>
+            <li class="small" style="list-style:none;color:var(--muted)">... 13 lainnya</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Columns</h3>
+        <table>
+          <thead>
+            <tr><th>NAME</th><th>TYPE</th><th>DOMAIN</th><th>COMMENT</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>UWI</b></td><td class="small">VARCHAR (40)</td><td class="small">UWI</td><td class="small">Unique Well Identifier</td></tr>
+            <tr><td><b>WELL_NAME</b></td><td class="small">VARCHAR (255)</td><td class="small">NAME</td><td class="small">Official well name</td></tr>
+            <tr><td><b>STATUS_TYPE</b></td><td class="small">VARCHAR (40)</td><td class="small">WELL_STATUS</td><td class="small">Current well status</td></tr>
+            <tr><td><b>SURFACE_LATITUDE</b></td><td class="small">NUMERIC (15,10)</td><td class="small">LATITUDE</td><td class="small">Surface latitude in decimal degrees</td></tr>
+            <tr><td><b>SURFACE_LONGITUDE</b></td><td class="small">NUMERIC (15,10)</td><td class="small">LONGITUDE</td><td class="small">Surface longitude in decimal degrees</td></tr>
+            <tr><td><b>SPUD_DATE</b></td><td class="small">DATE</td><td class="small">DATE</td><td class="small">Date drilling commenced</td></tr>
+            <tr><td><b>ACTIVE_IND</b></td><td class="small">VARCHAR (1)</td><td class="small">YES_NO</td><td class="small">Active indicator</td></tr>
+            <tr><td><b>ROW_CREATED_DATE</b></td><td class="small">TIMESTAMP</td><td class="small">DATE_TIME</td><td class="small">Row creation timestamp</td></tr>
+            <tr><td><b>ROW_CHANGED_BY</b></td><td class="small">VARCHAR (30)</td><td class="small">USER_ID</td><td class="small">Last user to modify row</td></tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top:18px">Constraints</h3>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">PRIMARY_KEY</span> <b>WELL_PK</b></div>
+          <div class="small" style="margin-top:6px">
+            <div>1. <b>UWI</b></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">FOREIGN_KEY</span> <b>WELL_BA_FK1</b> <span class="small">→ <a href="#">BA_AUTHORITY</a></span></div>
+          <div class="small" style="margin-top:6px">
+            <div>1. <b>BA_ID</b> → <b>BA_ID</b></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">FOREIGN_KEY</span> <b>WELL_FIELD_FK1</b> <span class="small">→ <a href="#">FIELD</a></span></div>
+          <div class="small" style="margin-top:6px">
+            <div>1. <b>FIELD_ID</b> → <b>FIELD_ID</b></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">UNIQUE_KEY</span> <b>WELL_UK1</b></div>
+          <div class="small" style="margin-top:6px">
+            <div>1. <b>WELL_NAME</b></div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">CHECK</span> <b>WELL_CK_ACTIVE</b></div>
+          <pre style="margin-top:8px">ACTIVE_IND IN ('Y','N')</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== LOAD ORDER ===================== -->
+  <div id="page-loadorder" class="page">
+    <div class="mockup-label">GET /load-order</div>
+    <div class="card" style="margin-bottom:16px">
+      <h2 style="margin-top:0">Load Order (Urutan Pengisian Tabel)</h2>
+      <div class="small">Graph FK: 412 tables, 1 870 foreign keys.</div>
+      <p class="small" style="margin-bottom:0">
+        Prinsip: tabel yang tidak bergantung pada tabel lain (indegree=0) muncul di level awal.
+        Jika ada <i>cycle</i>, tampilkan sebagai daftar "remaining indegree".
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3 style="margin-top:0">Level-by-level</h3>
+
+        <div style="margin-bottom:10px">
+          <span class="badge">Level 0</span>
+          <div class="small">8 tables — tidak bergantung siapapun</div>
+          <ul>
+            <li><a href="#">PPDM_LOOKUP</a></li>
+            <li><a href="#">PPDM_DOMAIN</a></li>
+            <li><a href="#">COUNTRY</a></li>
+            <li><a href="#">CURRENCY</a></li>
+            <li><a href="#">UOM</a></li>
+            <li><a href="#">STRAT_UNIT</a></li>
+            <li><a href="#">PPDM_TABLE</a></li>
+            <li><a href="#">PPDM_COLUMN</a></li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom:10px">
+          <span class="badge">Level 1</span>
+          <div class="small">24 tables</div>
+          <ul>
+            <li><a href="#">BA_AUTHORITY</a></li>
+            <li><a href="#">FIELD</a></li>
+            <li><a href="#">POOL</a></li>
+            <li><a href="#">LAND_SURVEY</a></li>
+            <li class="small" style="list-style:none;color:var(--muted)">... 20 lainnya</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom:10px">
+          <span class="badge">Level 2</span>
+          <div class="small">61 tables</div>
+          <ul>
+            <li><a href="#">WELL</a></li>
+            <li><a href="#">FACILITY</a></li>
+            <li><a href="#">AGREEMENT</a></li>
+            <li class="small" style="list-style:none;color:var(--muted)">... 58 lainnya</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom:10px">
+          <span class="badge">Level 3</span>
+          <div class="small">93 tables</div>
+          <ul>
+            <li><a href="#">WELL_BORE</a></li>
+            <li><a href="#">WELL_LOG</a></li>
+            <li><a href="#">PROD_STRING</a></li>
+            <li class="small" style="list-style:none;color:var(--muted)">... 90 lainnya</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Linear order</h3>
+        <ol>
+          <li><a href="#">PPDM_LOOKUP</a></li>
+          <li><a href="#">PPDM_DOMAIN</a></li>
+          <li><a href="#">COUNTRY</a></li>
+          <li><a href="#">CURRENCY</a></li>
+          <li><a href="#">UOM</a></li>
+          <li><a href="#">STRAT_UNIT</a></li>
+          <li><a href="#">PPDM_TABLE</a></li>
+          <li><a href="#">PPDM_COLUMN</a></li>
+          <li><a href="#">BA_AUTHORITY</a></li>
+          <li><a href="#">FIELD</a></li>
+          <li><a href="#">WELL</a></li>
+          <li><a href="#">WELL_BORE</a></li>
+          <li><a href="#">WELL_LOG</a></li>
+          <li style="color:var(--muted)">... 398 tabel lainnya</li>
+        </ol>
+
+        <h3>Cycles</h3>
+        <div class="small">Ada cycle / dependensi melingkar. Ini daftar tabel yang masih punya indegree &gt; 0:</div>
+        <table>
+          <thead><tr><th>TABLE</th><th>remaining indegree</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#">PROD_STRING</a></td><td>1</td></tr>
+            <tr><td><a href="#">PROD_STRING_FORMATION</a></td><td>2</td></tr>
+          </tbody>
+        </table>
+        <p class="small">Strategi cycle: gunakan <i>deferred constraint</i>, atau insert placeholder parent dulu, atau load per subject area.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== AUDIT ===================== -->
+  <div id="page-audit" class="page">
+    <div class="mockup-label">GET /audit</div>
+
+    <div class="card" style="margin-bottom:16px">
+      <h2 style="margin-top:0">Audit</h2>
+      <div class="small">Target schema: <b>public</b></div>
+      <div class="kpi" style="margin-top:10px">
+        <div class="box"><div class="small">Target tables</div><div style="font-size:22px;font-weight:700">389</div></div>
+        <div class="box"><div class="small">Meta tables</div><div style="font-size:22px;font-weight:700">412</div></div>
+        <div class="box"><div class="small">Meta constraints</div><div style="font-size:22px;font-weight:700">1 870</div></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3 style="margin-top:0">Missing tables</h3>
+        <div class="small">Meta table yang tidak ditemukan pada target:</div>
+        <ul>
+          <li>WELL_PRODUCTION_FISCAL</li>
+          <li>LAND_TRACT_PARTICIPANT</li>
+          <li>PPDM_SCHEMA_OBJECT</li>
+          <li>AGREEMENT_COMPONENT</li>
+          <li>AGREEMENT_PARTICIPANT</li>
+          <li style="color:var(--muted)">... 18 lainnya</li>
+        </ul>
+
+        <h3>Missing columns</h3>
+        <div class="small">Dicek pada 200 table pertama (untuk performa).</div>
+        <table>
+          <thead><tr><th>TABLE</th><th>COLUMN</th></tr></thead>
+          <tbody>
+            <tr><td>WELL</td><td>WATER_DEPTH</td></tr>
+            <tr><td>WELL</td><td>PROJECTED_DEPTH</td></tr>
+            <tr><td>WELL_BORE</td><td>BORE_AZIMUTH</td></tr>
+            <tr><td>FIELD</td><td>FIELD_ALIAS</td></tr>
+            <tr><td>BA_AUTHORITY</td><td>TAX_NUMBER</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">Orphan FK (sample)</h3>
+        <div class="small">Cek orphan untuk max 30 FK pertama. Jika error: biasanya karena tabel tidak ada/beda schema/nama column beda.</div>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">FK</span><b>WELL_BORE_FK1</b></div>
+          <div class="small">WELL_BORE → WELL</div>
+          <div class="small"><div>UWI → UWI</div></div>
+          <div style="margin-top:6px"><span class="badge">orphan_count</span> <b class="orphan-ok">0</b></div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">FK</span><b>PROD_STRING_FK1</b></div>
+          <div class="small">PROD_STRING → WELL</div>
+          <div class="small"><div>UWI → UWI</div></div>
+          <div style="margin-top:6px"><span class="badge">orphan_count</span> <b class="orphan-err">42</b></div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">FK</span><b>WELL_LOG_FK1</b></div>
+          <div class="small">WELL_LOG → WELL</div>
+          <div class="small"><div>UWI → UWI</div></div>
+          <div style="margin-top:6px"><span class="badge">orphan_count</span> <b class="orphan-ok">0</b></div>
+        </div>
+
+        <div class="card" style="padding:12px;margin-bottom:10px;background:rgba(255,255,255,0.02)">
+          <div><span class="badge">FK</span><b>AGREEMENT_COMP_FK1</b></div>
+          <div class="small">AGREEMENT_COMPONENT → AGREEMENT</div>
+          <div class="small"><div>AGREEMENT_ID → AGREEMENT_ID</div></div>
+          <div style="margin-top:6px"><span class="badge">error</span> <span class="small orphan-err">relation "agreement_component" does not exist</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== AUDIT DISABLED ===================== -->
+  <div id="page-auditoff" class="page">
+    <div class="mockup-label">GET /audit — target DB disabled</div>
+    <div class="card">
+      <h2 style="margin-top:0">Audit (Target DB)</h2>
+      <p class="small">
+        Audit dinonaktifkan. Aktifkan dengan mengubah <code>config/config.php</code>:
+      </p>
+      <pre> 'target_db' => ['enabled' => true, ...]</pre>
+      <p class="small">Setelah aktif, halaman ini akan membandingkan Meta vs Target DB dan menjalankan beberapa cek integritas (orphan FK, missing objects).</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const tabs = {
+    home: 0, tables: 1, detail: 2, loadorder: 3, audit: 4, auditoff: 5
+  };
+  document.querySelectorAll('.tab')[tabs[id]].classList.add('active');
+}
+</script>
+</body>
+</html>
